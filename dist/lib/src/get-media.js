@@ -1,15 +1,4 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -57,16 +46,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getMediaForUser = void 0;
+exports.resizeInstagramMedia = exports.getMediaForUser = void 0;
 var node_fetch_1 = __importDefault(require("node-fetch"));
 var config_1 = require("./config");
 var resize_image_1 = require("./resize-image");
 function getMediaForUser(_a) {
-    var resize_to_1, resize_to_1_1;
     var e_1, _b;
-    var user_id = _a.user_id, fields = _a.fields, _c = _a.limit, limit = _c === void 0 ? 25 : _c, access_token = _a.access_token, after = _a.after, resize_to = _a.resize_to;
+    var user_id = _a.user_id, fields = _a.fields, _c = _a.limit, limit = _c === void 0 ? 25 : _c, access_token = _a.access_token, after = _a.after, resize_to = _a.resize_to, include_thumbnail = _a.include_thumbnail;
     return __awaiter(this, void 0, void 0, function () {
-        var requestUrl, params, paramsToAppend, mediaResponse, resizedMediaResponse, resizeConfig, resizedMedia, _d, _e, e_1_1;
+        var requestUrl, params, paramsToAppend, mediaResponse, _d, _e, media, resizedResources, thumbnailResource, e_1_1;
         var _this = this;
         return __generator(this, function (_f) {
             switch (_f.label) {
@@ -93,70 +81,108 @@ function getMediaForUser(_a) {
                     if (mediaResponse.error) {
                         return [2 /*return*/, Promise.reject(mediaResponse.error)];
                     }
-                    if (!(resize_to === null || resize_to === void 0 ? void 0 : resize_to.length)) return [3 /*break*/, 15];
-                    resizedMediaResponse = [];
                     _f.label = 2;
                 case 2:
-                    _f.trys.push([2, 8, 9, 14]);
-                    resize_to_1 = __asyncValues(resize_to);
+                    _f.trys.push([2, 10, 11, 16]);
+                    _d = __asyncValues(mediaResponse.data);
                     _f.label = 3;
-                case 3: return [4 /*yield*/, resize_to_1.next()];
+                case 3: return [4 /*yield*/, _d.next()];
                 case 4:
-                    if (!(resize_to_1_1 = _f.sent(), !resize_to_1_1.done)) return [3 /*break*/, 7];
-                    resizeConfig = resize_to_1_1.value;
-                    _d = [__assign({}, mediaResponse)];
-                    _e = {};
-                    return [4 /*yield*/, Promise.all(mediaResponse.data.map(function (media) { return __awaiter(_this, void 0, void 0, function () {
-                            var _a, path, suffix, destinationPath;
-                            return __generator(this, function (_b) {
-                                switch (_b.label) {
-                                    case 0:
-                                        if (!resizeConfig.destination_config) {
-                                            return [2 /*return*/, Promise.resolve(media)];
-                                        }
-                                        if (!media.media_url || media.media_type !== "IMAGE") {
-                                            // if current media is not a image resize operation can not be applied
-                                            return [2 /*return*/, Promise.resolve(media)];
-                                        }
-                                        _a = resizeConfig.destination_config, path = _a.path, suffix = _a.suffix;
-                                        destinationPath = path + "/" + (media.shortcode || media.id) + suffix;
-                                        return [4 /*yield*/, resize_image_1.resizeImage({
-                                                size: resizeConfig.size,
-                                                source_url: media.media_url,
-                                                destination_path: destinationPath,
-                                            })];
+                    if (!(_e = _f.sent(), !_e.done)) return [3 /*break*/, 9];
+                    media = _e.value;
+                    if (!resize_to) return [3 /*break*/, 6];
+                    return [4 /*yield*/, Promise.all(resize_to.map(function (resizeConfig) { return __awaiter(_this, void 0, void 0, function () {
+                            var resizedImage;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0: return [4 /*yield*/, resizeInstagramMedia(media, resizeConfig)];
                                     case 1:
-                                        _b.sent();
-                                        return [2 /*return*/, Promise.resolve(__assign(__assign({}, media), { resized_media_path: destinationPath }))];
+                                        resizedImage = _a.sent();
+                                        if (!resizedImage) {
+                                            return [2 /*return*/, { size: resizeConfig.size, resized: false }];
+                                        }
+                                        return [2 /*return*/, {
+                                                resized: true,
+                                                size: resizeConfig.size,
+                                                resized_resource_path: resizedImage,
+                                            }];
                                 }
                             });
                         }); }))];
                 case 5:
-                    resizedMedia = __assign.apply(void 0, _d.concat([(_e.data = _f.sent(), _e)]));
-                    resizedMediaResponse.push(resizedMedia);
+                    resizedResources = _f.sent();
+                    media.resized_resources = resizedResources;
                     _f.label = 6;
-                case 6: return [3 /*break*/, 3];
-                case 7: return [3 /*break*/, 14];
-                case 8:
+                case 6:
+                    if (!include_thumbnail) return [3 /*break*/, 8];
+                    return [4 /*yield*/, resizeInstagramMedia(media, include_thumbnail)];
+                case 7:
+                    thumbnailResource = _f.sent();
+                    if (thumbnailResource) {
+                        media.thumbnail_resource = {
+                            size: include_thumbnail.size,
+                            thumbnail_resource_path: thumbnailResource,
+                        };
+                    }
+                    _f.label = 8;
+                case 8: return [3 /*break*/, 3];
+                case 9: return [3 /*break*/, 16];
+                case 10:
                     e_1_1 = _f.sent();
                     e_1 = { error: e_1_1 };
-                    return [3 /*break*/, 14];
-                case 9:
-                    _f.trys.push([9, , 12, 13]);
-                    if (!(resize_to_1_1 && !resize_to_1_1.done && (_b = resize_to_1.return))) return [3 /*break*/, 11];
-                    return [4 /*yield*/, _b.call(resize_to_1)];
-                case 10:
-                    _f.sent();
-                    _f.label = 11;
-                case 11: return [3 /*break*/, 13];
+                    return [3 /*break*/, 16];
+                case 11:
+                    _f.trys.push([11, , 14, 15]);
+                    if (!(_e && !_e.done && (_b = _d.return))) return [3 /*break*/, 13];
+                    return [4 /*yield*/, _b.call(_d)];
                 case 12:
+                    _f.sent();
+                    _f.label = 13;
+                case 13: return [3 /*break*/, 15];
+                case 14:
                     if (e_1) throw e_1.error;
                     return [7 /*endfinally*/];
-                case 13: return [7 /*endfinally*/];
-                case 14: return [2 /*return*/, resizedMediaResponse];
-                case 15: return [2 /*return*/, mediaResponse];
+                case 15: return [7 /*endfinally*/];
+                case 16: return [2 /*return*/, mediaResponse];
             }
         });
     });
 }
 exports.getMediaForUser = getMediaForUser;
+function resizeInstagramMedia(media, resizeConfig) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _a, path, suffix, destinationPath, err_1;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
+                case 0:
+                    _b.trys.push([0, 2, , 3]);
+                    // do not resize if one of the config is missing
+                    if (!resizeConfig.destination_config ||
+                        !resizeConfig.destination_config.path ||
+                        !resizeConfig.destination_config.suffix) {
+                        return [2 /*return*/];
+                    }
+                    // if current media is not a image resize operation can not be applied
+                    if (!media.media_url || media.media_type !== "IMAGE") {
+                        return [2 /*return*/];
+                    }
+                    _a = resizeConfig.destination_config, path = _a.path, suffix = _a.suffix;
+                    destinationPath = path + "/" + (media.shortcode || media.id) + suffix;
+                    return [4 /*yield*/, resize_image_1.resizeImage({
+                            size: resizeConfig.size,
+                            source_url: media.media_url,
+                            destination_path: destinationPath,
+                        })];
+                case 1:
+                    _b.sent();
+                    return [2 /*return*/, destinationPath];
+                case 2:
+                    err_1 = _b.sent();
+                    console.error("Could not resize image", err_1);
+                    return [2 /*return*/];
+                case 3: return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.resizeInstagramMedia = resizeInstagramMedia;
