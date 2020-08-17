@@ -2,19 +2,21 @@ import fetch from "node-fetch";
 import { baseUrl } from "./config";
 
 export interface getMediaProps {
-  userId: string;
+  user_id: string;
   fields: string[]; // fields to include in response
   limit: number | string;
   access_token: string;
+  after: number | string;
 }
 
 export async function getMediaForUser({
-  userId,
+  user_id,
   fields,
   limit = 25,
   access_token,
+  after,
 }: getMediaProps) {
-  const requestUrl = `${baseUrl}/v8.0/${userId}/media`;
+  let requestUrl = `${baseUrl}/v8.0/${user_id}/media`;
 
   const params = new URLSearchParams({});
   if (fields.length) {
@@ -23,7 +25,14 @@ export async function getMediaForUser({
 
   params.append("limit", limit + "");
   params.append("access_token", access_token);
-  requestUrl.concat(`?${params}`);
+
+  if (after) {
+    params.append("after", after + "");
+  }
+  const paramsToAppend = params.toString();
+  if (paramsToAppend) {
+    requestUrl += `?${paramsToAppend}`;
+  }
 
   return fetch(requestUrl, {
     method: "GET",

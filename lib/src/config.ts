@@ -1,1 +1,1 @@
-export const baseUrl = "https://graph.instagram.com";
+export const baseUrl = "https://graph.facebook.com";
