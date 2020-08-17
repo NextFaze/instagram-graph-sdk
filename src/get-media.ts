@@ -1,6 +1,6 @@
-import fetch from "node-fetch";
-import { baseUrl } from "./config";
-import { resizeInstagramMedia } from "./resize-instagram-media";
+import fetch from 'node-fetch';
+import { baseUrl } from './config';
+import { resizeInstagramMedia } from './resize-instagram-media';
 
 export type resizeToProps = {
   size: { width: number; height: number };
@@ -33,14 +33,14 @@ export async function getMediaForUser({
 
   const params = new URLSearchParams({});
   if (fields.length) {
-    params.append("fields", fields.join(","));
+    params.append('fields', fields.join(','));
   }
 
-  params.append("limit", limit + "");
-  params.append("access_token", access_token);
+  params.append('limit', limit + '');
+  params.append('access_token', access_token);
 
   if (after) {
-    params.append("after", after + "");
+    params.append('after', after + '');
   }
   const paramsToAppend = params.toString();
   if (paramsToAppend) {
@@ -48,8 +48,8 @@ export async function getMediaForUser({
   }
 
   const mediaResponse = await fetch(requestUrl, {
-    method: "GET",
-  }).then((data) => data.json());
+    method: 'GET',
+  }).then(data => data.json());
 
   if (mediaResponse.error) {
     return Promise.reject(mediaResponse.error);
@@ -59,7 +59,7 @@ export async function getMediaForUser({
     // resize images to given config
     if (resize_to) {
       const resizedResources = await Promise.all(
-        resize_to.map(async (resizeConfig) => {
+        resize_to.map(async resizeConfig => {
           const resizedImage = await resizeInstagramMedia(media, resizeConfig);
           if (!resizedImage) {
             return { size: resizeConfig.size, resized: false };

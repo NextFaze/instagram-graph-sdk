@@ -1,18 +1,29 @@
 {
-  "name": "instagram-node-api",
+  "name": "instagram-graphql-api",
   "version": "0.1.0",
-  "description": "",
-  "main": "dist/lib/src/index.js",
+  "description": "Simple Instagram graphql API wrapper for node",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "build:watch": "tsc --watch"
+    "build:watch": "tsc --watch",
+    "format:check": "prettier --check \"**/*.ts\"",
+    "format:write": "prettier --write \"**/*.ts\""
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/NextFaze/instagram-node-api.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "graphql",
+    "posts",
+    "resize",
+    "facebook graphql",
+    "instagram",
+    "typescript",
+    "rich types",
+    "basic display api"
+  ],
+  "author": "Rushi Patel <rpatel@nextfaze.com> (https://github.com/whimzyLive)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/NextFaze/instagram-node-api/issues"
@@ -20,6 +31,7 @@
   "homepage": "https://github.com/NextFaze/instagram-node-api#readme",
   "devDependencies": {
     "@types/node-fetch": "^2.5.7",
+    "prettier": "^2.0.5",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
   },
@@ -31,6 +43,7 @@
     "dist"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "tag": "alpha"
   }
 }

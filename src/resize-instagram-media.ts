@@ -1,5 +1,5 @@
-import { resizeToProps } from "./get-media";
-import { resizeImage } from "./helpers/resize-image";
+import { resizeToProps } from './get-media';
+import { resizeImage } from './helpers/resize-image';
 
 export async function resizeInstagramMedia(
   media: any,
@@ -16,7 +16,7 @@ export async function resizeInstagramMedia(
     }
 
     // if current media is not a image resize operation can not be applied
-    if (!media.media_url || media.media_type !== "IMAGE") {
+    if (!media.media_url || media.media_type !== 'IMAGE') {
       return;
     }
 
@@ -31,7 +31,7 @@ export async function resizeInstagramMedia(
 
     return destinationPath;
   } catch (err) {
-    console.error("Could not resize image", err);
+    console.error('Could not resize image', err);
     return;
   }
 }

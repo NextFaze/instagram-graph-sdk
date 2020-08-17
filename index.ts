@@ -1,1 +1,1 @@
-export * from "./lib/src/get-media";
+export * from './src/get-media';

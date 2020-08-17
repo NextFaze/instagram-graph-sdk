@@ -1,4 +1,4 @@
-import Jimp from "jimp";
+import Jimp from 'jimp';
 
 export interface resizeImageProps {
   size: { width: number; height: number };
