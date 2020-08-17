@@ -1,5 +1,4 @@
 import Jimp from "jimp";
-import jimp from "jimp";
 
 export interface resizeImageProps {
   size: { width: number; height: number };
@@ -12,6 +11,6 @@ export async function resizeImage({
   size: { width = Jimp.AUTO, height = Jimp.AUTO },
   destination_path,
 }: resizeImageProps) {
-  const image = await jimp.read(source_url);
+  const image = await Jimp.read(source_url);
   return image.resize(width, height).writeAsync(destination_path);
 }

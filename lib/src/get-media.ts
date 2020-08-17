@@ -1,8 +1,8 @@
 import fetch from "node-fetch";
 import { baseUrl } from "./config";
-import { resizeImage, resizeImageProps } from "./resize-image";
+import { resizeInstagramMedia } from "./resize-instagram-media";
 
-type resizeToProps = {
+export type resizeToProps = {
   size: { width: number; height: number };
   destination_config: {
     path: string;
@@ -91,39 +91,4 @@ export async function getMediaForUser({
   }
 
   return mediaResponse;
-}
-
-export async function resizeInstagramMedia(
-  media: any,
-  resizeConfig: resizeToProps
-) {
-  try {
-    // do not resize if one of the config is missing
-    if (
-      !resizeConfig.destination_config ||
-      !resizeConfig.destination_config.path ||
-      !resizeConfig.destination_config.suffix
-    ) {
-      return;
-    }
-
-    // if current media is not a image resize operation can not be applied
-    if (!media.media_url || media.media_type !== "IMAGE") {
-      return;
-    }
-
-    const { path, suffix } = resizeConfig.destination_config;
-    const destinationPath = `${path}/${media.shortcode || media.id}${suffix}`;
-
-    await resizeImage({
-      size: resizeConfig.size,
-      source_url: media.media_url,
-      destination_path: destinationPath,
-    });
-
-    return destinationPath;
-  } catch (err) {
-    console.error("Could not resize image", err);
-    return;
-  }
 }
