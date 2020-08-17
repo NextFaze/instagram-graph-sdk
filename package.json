@@ -20,9 +20,11 @@
   "homepage": "https://github.com/NextFaze/instagram-node-api#readme",
   "devDependencies": {
     "@types/node-fetch": "^2.5.7",
-    "ts-node": "^8.10.2"
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7"
   },
   "dependencies": {
+    "jimp": "^0.16.0",
     "node-fetch": "^2.6.0"
   },
   "files": [
