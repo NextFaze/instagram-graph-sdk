@@ -20,16 +20,16 @@ Install using npm
 
 ## Shipped
 
-🚀IG Media
+🚀&nbsp;IG Media
 
 - get all media for user (built in resizing support)
 
 ## Roadmap
 
-☑ Add Usage docs </br>
-☑ Add test coverage </br>
-☑ Add semantic-release pipeline </br>
-☑ Include other endpoints (priority based on based on request) </br>
+☑&nbsp;Add Usage docs </br>
+☑&nbsp;Add test coverage </br>
+☑&nbsp;Add semantic-release pipeline </br>
+☑&nbsp;Include other endpoints (priority based on based on request) </br>
 
 ## Contributors
 
