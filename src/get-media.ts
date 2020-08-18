@@ -67,7 +67,7 @@ export async function getMediaForUser({
           return {
             resized: true,
             size: resizeConfig.size,
-            resized_resource_path: resizedImage,
+            path: resizedImage,
           };
         })
       );
@@ -84,7 +84,7 @@ export async function getMediaForUser({
       if (thumbnailResource) {
         media.thumbnail_resource = {
           size: include_thumbnail.size,
-          thumbnail_resource_path: thumbnailResource,
+          path: thumbnailResource,
         };
       }
     }
