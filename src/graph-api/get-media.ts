@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
-import { baseUrl } from './config';
-import { resizeInstagramMedia } from './resize-instagram-media';
+import { config } from '../config';
+import { resizeInstagramMedia } from '../resize-instagram-media';
 
 export type resizeToProps = {
   size: { width: number; height: number };
@@ -20,6 +20,13 @@ export interface getMediaProps {
   resize_to?: resizeToProps[];
 }
 
+/**
+ *
+ * @requires permission: [instagram_basic](https://developers.facebook.com/docs/permissions/reference#reference-instagram_basic)
+ * @requires permission: [pages_show_list](https://developers.facebook.com/docs/permissions/reference#reference-pages_show_list)
+ * @requires permission: [pages_read_engagement](https://developers.facebook.com/docs/permissions/reference#reference-pages_read_engagement)
+ * @see [Permissions](https://developers.facebook.com/docs/instagram-api/reference/media/)
+ */
 export async function getMediaForUser({
   user_id,
   fields,
@@ -29,7 +36,7 @@ export async function getMediaForUser({
   resize_to,
   include_thumbnail,
 }: getMediaProps) {
-  let requestUrl = `${baseUrl}/v8.0/${user_id}/media`;
+  let requestUrl = `${config.graphApiBaseUrl}/${user_id}/media`;
 
   const params = new URLSearchParams({});
   if (fields.length) {
