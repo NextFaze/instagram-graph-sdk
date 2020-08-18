@@ -1,6 +1,6 @@
 {
   "name": "instagram-graph-sdk",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Simple Instagram graphql API wrapper for node",
   "main": "dist/index.js",
   "scripts": {
@@ -17,14 +17,16 @@
     "graphql",
     "posts",
     "resize",
-    "facebook graphql",
+    "facebook",
     "instagram",
     "typescript",
     "rich types",
-    "basic display api"
+    "basic display api",
+    "graph api",
+    "sdk"
   ],
   "author": "Rushi Patel <rpatel@nextfaze.com> (https://github.com/whimzyLive)",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/NextFaze/instagram-node-api/issues"
   },
@@ -44,6 +46,6 @@
   ],
   "publishConfig": {
     "access": "public",
-    "tag": "alpha"
+    "tag": "latest"
   }
 }
