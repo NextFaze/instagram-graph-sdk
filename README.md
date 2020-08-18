@@ -7,6 +7,11 @@ A simple lightweight wrapper for facebook graph API for instagram written in typ
 - Rich types support
 - Written in typescript
 
+## Why this library exists
+
+Instagram Legacy API permission was disabled on June 29, 2020 in favor of new Instagram graph API. Many functionality that did exist in pervious API is not available in new graph API such as options to get different resolutions of posts (images) and others. </br>
+The goal of this sdk (Software development kit) to is to provide easy to use interface to use graph API also while also powering it with some additional features.
+
 ## Installation
 
 Install using npm
@@ -17,7 +22,7 @@ Install using npm
 
 🚀IG Media
 
-- get all media for user
+- get all media for user (built in resizing support)
 
 ## Roadmap
 
@@ -28,7 +33,7 @@ Install using npm
 
 ## Contributors
 
-- Open to contribution
+- Open for contributions
 
 ## Licence
 
