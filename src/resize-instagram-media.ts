@@ -1,4 +1,4 @@
-import { resizeToProps } from './graph-api/get-media';
+import { resizeToProps } from './base-get-media';
 import { resizeImage } from './helpers/resize-image';
 
 export async function resizeInstagramMedia(
