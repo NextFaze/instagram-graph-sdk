@@ -14,7 +14,8 @@ export async function refreshToken({ access_token }: refreshTokenProps) {
   params.append('grant_type', 'ig_refresh_token');
   params.append('access_token', access_token);
   const response = await fetch(
-    `${config.basicDisplayApiBaseUrl}/refresh_access_token`
+    `${config.basicDisplayApiBaseUrl}/refresh_access_token?${params}`,
+    { method: 'GET' }
   );
   return await response.json();
 }
