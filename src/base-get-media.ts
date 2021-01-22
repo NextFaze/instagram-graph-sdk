@@ -11,6 +11,9 @@ export type resizeToProps = {
 
 export interface BaseGetMediaProps {
   user_id: string;
+  /**
+   * Refer to https://developers.facebook.com/docs/instagram for more information on supported fields
+   */
   fields: string[]; // fields to include in response
   limit: number | string;
   access_token: string;
